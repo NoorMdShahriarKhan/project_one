@@ -1,0 +1,25 @@
+for line in data:
+    if 'NAtoms' in line:
+        atom_num_line = line.split()
+        number_of_atoms = int(atom_num_line[1])
+        print('Number of atoms : {}'.format(number_of_atoms))
+        break
+
+coord_line_num_list = []
+count = 0
+for linenum, line in enumerate(data):
+    if 'Standard orientation' in line:
+        coord_line_num = linenum + 5
+        coord_line_num_list.append(coord_line_num)
+        final_coord_st_point = coord_line_num_list[-1]
+        print(final_coord_st_point)
+        while (count < number_of_atoms):
+            data_line = data[final_coord_st_point + count].split()
+            #print(data_line)
+            symbol = str(data_line[1])
+            symbol = symbol.replace("1", "H")
+            symbol = symbol.replace("6", "C")
+            print('{} {} {} {}'.format(symbol, data_line[3], data_line[4], data_line[5]))
+            count = count + 1
+        break
+"can you track the change?"    

@@ -1,0 +1,31 @@
+import os
+
+file_generator = open('movie_file.xyz', 'w+')
+input_file_locator = os.path.join('v_2alcho_2.md.out')
+#print(input_file_locator)
+
+input_file = open(input_file_locator, "r")
+data = input_file.readlines()
+#print(data)
+
+counter = 0        
+for linenumber, line in enumerate(data):
+    if 'number of atoms/cell' in line:
+        atomcount = line
+        words = atomcount.split()
+        number_of_atoms = int(words[-1])
+        #print(number_of_atoms)
+for linenumber, line in enumerate(data):    
+        if 'ATOMIC_POSITIONS (angstrom)' in line:
+            coord_start = linenumber + 1
+            coord_end = linenumber + number_of_atoms
+            file_generator.write(F'{number_of_atoms} \n')
+            file_generator.write(F'{counter} \n')
+            counter = counter + 1
+            while True:
+                file_generator.write(F'{data[coord_start]}')
+                coord_start = coord_start + 1
+                if (coord_start > coord_end):
+                    break
+input_file.close()
+file_generator.close()
